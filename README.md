@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: anatawa12/fork-sync-all-branches@master
+      - uses: anatawa12/fork-sync-all-branches@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 ```

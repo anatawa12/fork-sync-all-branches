@@ -326,7 +326,7 @@ async function initRepository(options) {
 }
 // buildGitUrl(options, options.origin)
 function buildGitUrl(options, repo) {
-    return `https://${options.githubToken}@github.com/${repo.owner}/${repo.repo}.git`;
+    return `https://anything:${options.githubToken}@github.com/${repo.owner}/${repo.repo}.git`;
 }
 async function initRemoteOrigin(options) {
     await exec_command_1.execCommand("git", "-C", options.workspace, "remote", "add", options.originName, buildGitUrl(options, options.origin));

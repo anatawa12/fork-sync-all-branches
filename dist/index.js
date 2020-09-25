@@ -47,7 +47,6 @@ function verifyRepositoryIdentifier(originIdentifier) {
     };
 }
 async function readOptions() {
-    var _a, _b;
     // GitHub workspace
     let githubWorkspacePath = process.env["GITHUB_WORKSPACE"];
     if (!githubWorkspacePath) {
@@ -71,8 +70,8 @@ async function readOptions() {
         owner: upstreamRepo.owner.login,
         repo: upstreamRepo.name,
     };
-    const only = (_a = core.getInput("only")) === null || _a === void 0 ? void 0 : _a.split("\n");
-    const exclude = (_b = core.getInput("exclude")) === null || _b === void 0 ? void 0 : _b.split("\n");
+    const only = core.getInput("only");
+    const exclude = core.getInput("exclude");
     if (exclude && only)
         throw new Error("both exclude and only cannot be used same time.");
     return {
@@ -82,8 +81,8 @@ async function readOptions() {
         upstream,
         originName: "origin",
         upstreamName: "upstream",
-        only,
-        exclude,
+        only: only ? new RegExp(only) : undefined,
+        exclude: exclude ? new RegExp(exclude) : undefined,
     };
 }
 exports.readOptions = readOptions;
@@ -348,9 +347,9 @@ async function computeBranchesToCopy(options) {
         for (var _b = __asyncValues(fs_helper_1.walkDirectory(path.join(options.workspace, ".git", "refs", "remotes", options.upstreamName))), _c; _c = await _b.next(), !_c.done;) {
             let branch = _c.value;
             branch = fs_helper_1.toUnixLike(branch);
-            if (options.only && !options.only.includes(branch))
+            if (options.only && !options.only.test(branch))
                 continue;
-            if (options.exclude && options.exclude.includes(branch))
+            if (options.exclude && options.exclude.test(branch))
                 continue;
             branches.push(branch);
         }

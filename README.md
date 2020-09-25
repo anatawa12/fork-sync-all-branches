@@ -27,9 +27,9 @@ jobs:
 
 # Parameters
 
-|  name           | is optional |   Default                |   description                                        |
-|---              |---          |---                       |---                                                   |
-|   github_token  | required    |                          | Token to access the Github API                       |
-|   origin        | optional    | ${{ github.repository }} | the repository to sync to. must be forked repository |
-|   only          | optional    | (none)                   | if specified, copies only specified branches         |
-|   exclude       | optional    | (none)                   | if specified, copies branches not specified here.    |
+| name         | is optional | Default                  | description                                              |
+| ---          | ----------- | ------------------------ | ---------------------------------------------------------|
+| github_token | required    |                          | Token to access the Github API                           |
+| origin       | optional    | ${{ github.repository }} | the repository to sync to. must be forked repository     |
+| only         | optional    | (none)                   | a regex. if specified, copies only matched branches      |
+| exclude      | optional    | (none)                   | a regex. if specified, copies only not matched branches. |

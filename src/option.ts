@@ -12,6 +12,6 @@ export interface IOption {
     originName: string;
     upstreamName: string;
 
-    only: string[] | undefined;
-    exclude: string[] | undefined;
+    only: RegExp | undefined;
+    exclude: RegExp | undefined;
 }

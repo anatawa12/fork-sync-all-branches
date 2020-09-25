@@ -43,8 +43,8 @@ export async function readOptions(): Promise<IOption> {
         repo: upstreamRepo.name,
     };
 
-    const only = core.getInput("only")?.split("\n");
-    const exclude = core.getInput("exclude")?.split("\n");
+    const only = core.getInput("only");
+    const exclude = core.getInput("exclude");
 
     if (exclude && only) throw new Error("both exclude and only cannot be used same time.");
 
@@ -55,8 +55,8 @@ export async function readOptions(): Promise<IOption> {
         upstream,
         originName: "origin",
         upstreamName: "upstream",
-        only,
-        exclude,
+        only: only ? new RegExp(only) : undefined,
+        exclude: exclude ? new RegExp(exclude) : undefined,
     };
 }
 

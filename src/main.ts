@@ -63,8 +63,8 @@ async function computeBranchesToCopy(options: IOption): Promise<string[]> {
         path.join(options.workspace, ".git", "refs", "remotes", options.upstreamName),
     )) {
         branch = toUnixLike(branch);
-        if (options.only && !options.only.includes(branch)) continue;
-        if (options.exclude && options.exclude.includes(branch)) continue;
+        if (options.only && !options.only.test(branch)) continue;
+        if (options.exclude && options.exclude.test(branch)) continue;
         branches.push(branch);
     }
     return branches;

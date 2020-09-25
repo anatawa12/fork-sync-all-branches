@@ -1,6 +1,9 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'fork-sync-all-branches'
+description: 'a action to sync (reset) all branches with upstream'
+author: 'anatawa12'
+branding:
+  icon: 'git-branch'
+  color: 'gray-dark'
 inputs:
   github_token:
     required: true

@@ -22,7 +22,7 @@ async function initRepository(options: IOption): Promise<void> {
 // buildGitUrl(options, options.origin)
 
 function buildGitUrl(options: IOption, repo: Repository): string {
-    return `https://${options.githubToken}@github.com/${repo.owner}/${repo.repo}.git`;
+    return `https://anything:${options.githubToken}@github.com/${repo.owner}/${repo.repo}.git`;
 }
 
 async function initRemoteOrigin(options: IOption): Promise<void> {

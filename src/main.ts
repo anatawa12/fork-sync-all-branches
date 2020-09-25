@@ -99,7 +99,7 @@ async function mergeWithUpstream(options: IOption, branches: string[]): Promise<
             !(await compareRef(
                 options.workspace,
                 `refs/heads/${branch}`,
-                `refs/remote/${options.originName}/${branch}`,
+                `refs/remotes/${options.originName}/${branch}`,
             ))
         ) {
             await execCommand("git", "-C", options.workspace, "checkout", branch);

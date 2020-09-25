@@ -383,7 +383,7 @@ async function mergeWithUpstream(options, branches) {
     for (const branch of branches) {
         if (!(await compareRef(options.workspace, `refs/heads/${branch}`, `refs/remotes/${options.originName}/${branch}`))) {
             await exec_command_1.execCommand("git", "-C", options.workspace, "checkout", branch);
-            await exec_command_1.execCommand("git", "-C", options.workspace, "merge", "--ff", `refs/remote/${options.originName}/${branch}`);
+            await exec_command_1.execCommand("git", "-C", options.workspace, "merge", "--ff", `refs/remotes/${options.originName}/${branch}`);
         }
     }
 }

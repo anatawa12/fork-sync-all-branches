@@ -109,7 +109,7 @@ async function mergeWithUpstream(options: IOption, branches: string[]): Promise<
                 options.workspace,
                 "merge",
                 "--ff",
-                `refs/remote/${options.originName}/${branch}`,
+                `refs/remotes/${options.originName}/${branch}`,
             );
         }
     }

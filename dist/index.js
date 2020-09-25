@@ -316,9 +316,8 @@ async function main(options) {
     await shallowFetchOrigin(options);
     await fetchUpstream(options);
     const branches = await computeBranchesToCopy(options);
-    await createBranchesByOrigin(options, branches);
+    await createBranchesByUpstream(options, branches);
     await setUpstreamAsOrigin(options, branches);
-    await mergeWithUpstream(options, branches);
     await pushToOrigin(options, branches);
 }
 exports.main = main;
@@ -364,9 +363,9 @@ async function computeBranchesToCopy(options) {
     }
     return branches;
 }
-async function createBranchesByOrigin(options, branches) {
+async function createBranchesByUpstream(options, branches) {
     for (const branch of branches) {
-        await fs_helper_1.copyFileWithCreateParents(path.join(options.workspace, ".git", "refs", "remotes", options.originName, fs_helper_1.fromUnixLike(branch)), path.join(options.workspace, ".git", "refs", "heads", fs_helper_1.fromUnixLike(branch)));
+        await fs_helper_1.copyFileWithCreateParents(path.join(options.workspace, ".git", "refs", "remotes", options.upstreamName, fs_helper_1.fromUnixLike(branch)), path.join(options.workspace, ".git", "refs", "heads", fs_helper_1.fromUnixLike(branch)));
     }
 }
 async function setUpstreamAsOrigin(options, branches) {
@@ -378,19 +377,6 @@ async function setUpstreamAsOrigin(options, branches) {
         appendText += `\tmerge = refs/heads/${escapeForGitConfig(branch)}`;
     }
     await fs.promises.appendFile(gitConfigPath, appendText);
-}
-async function mergeWithUpstream(options, branches) {
-    for (const branch of branches) {
-        if (!(await compareRef(options.workspace, `refs/heads/${branch}`, `refs/remote/${options.originName}/${branch}`))) {
-            await exec_command_1.execCommand("git", "-C", options.workspace, "checkout", branch);
-            await exec_command_1.execCommand("git", "-C", options.workspace, "merge", "--ff", `refs/remote/${options.originName}/${branch}`);
-        }
-    }
-}
-async function compareRef(work, ref1, ref2) {
-    const ref1Hash = await fs.promises.readFile(path.join(work, ".git", fs_helper_1.fromUnixLike(ref1)));
-    const ref2Hash = await fs.promises.readFile(path.join(work, ".git", fs_helper_1.fromUnixLike(ref2)));
-    return ref1Hash === ref2Hash;
 }
 function escapeForGitConfig(text) {
     return `${text.replace('"', '\\"')}`;
